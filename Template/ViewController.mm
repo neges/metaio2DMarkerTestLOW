@@ -34,6 +34,8 @@
     
     
     markerArray = [[NSArray alloc]init];
+	
+	logCounter = 1;
     
     [self createLogFile];
 	   
@@ -143,11 +145,17 @@
                 [handle writeData:[markerPose dataUsingEncoding:NSUTF8StringEncoding]];
                 
                 
-                //screenshot erstellen
-                [self takeScreenshot:logDate];
-                 
-                //logswitch nach einem druchlauf deaktivieren
-                logSwitch.on = false;
+				if (logCounter > 29)
+				{
+					//logswitch nach 30 durchläufen deaktivieren
+					logSwitch.on = false;
+					logCounter = 1;
+					//screenshot erstellen
+					[self takeScreenshot:logDate];
+					
+				}else{
+					logCounter = logCounter + 1;
+				}
             }
     
 }
